@@ -1,6 +1,6 @@
 import XCTest
-@testable import osm_swiftTests
+@testable import SwiftOSMTests
 
 XCTMain([
-    testCase(osm_swiftTests.allTests),
+    testCase(SwiftOSMTests.allTests),
 ])

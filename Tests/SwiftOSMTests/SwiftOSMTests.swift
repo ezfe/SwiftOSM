@@ -1,7 +1,7 @@
 import XCTest
-@testable import osm_swift
+@testable import SwiftOSM
 
-class osm_swiftTests: XCTestCase {
+class SwiftOSMTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
