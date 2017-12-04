@@ -9,7 +9,7 @@ import Foundation
 import SwiftPriorityQueue
 
 extension OSM {
-    func route(start: OSMNode, end: OSMNode) -> (distances: Dictionary<OSMNode, Double>, previous: Dictionary<OSMNode, OSMNode>) {
+    public func route(start: OSMNode, end: OSMNode) -> (distances: Dictionary<OSMNode, Double>, previous: Dictionary<OSMNode, OSMNode>) {
         
         var distances = Dictionary<OSMNode, Double>()
         var previous = Dictionary<OSMNode, OSMNode>()
@@ -35,6 +35,9 @@ extension OSM {
                         queue.reshuffle(element: neighbor)
                     }
                 }
+            }
+            if node == end {
+                break
             }
         }
         
