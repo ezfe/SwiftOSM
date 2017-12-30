@@ -24,4 +24,19 @@ public class OSM {
             self.ways.insert(way)
         }
     }
+    
+    public func nodes(near startLocation: Coordinate, radius searchRadius: Int = 50) -> [OSMNode] {
+        var found = Array<OSMNode>()
+        
+        for (_, node) in nodes {
+            let distance = startLocation.distance(to: node.location)
+            if distance < Double(searchRadius) {
+                found.append(node)
+            }
+        }
+        
+        return found.sorted(by: { (lhs, rhs) -> Bool in
+            return lhs.location.distance(to: startLocation) < rhs.location.distance(to: startLocation)
+        })
+    }
 }

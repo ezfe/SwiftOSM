@@ -1,5 +1,6 @@
 import Foundation
 import SWXMLHash
+import HTTP
 
 public struct Coordinate: CustomStringConvertible {
     public let latitude: Double
@@ -46,37 +47,14 @@ public struct Rect {
                               longitude: Swift.max(a.longitude, b.longitude))
     }
     
-    private func mapURL() -> URL {
+    public var mapURL: URL {
         return URL(string: "http://api.openstreetmap.org/api/0.6/map?bbox=\(min.longitude),\(min.latitude),\(max.longitude),\(max.latitude)")!
     }
     
-    public func query() -> OSM? {
-        let requestURL = mapURL()
+    public func contains(point: Coordinate) -> Bool {
+        let latitudeOK = min.latitude < point.latitude && max.latitude > point.latitude
+        let longitudeOK = min.longitude < point.longitude && max.longitude > point.longitude
         
-        let semaphore = DispatchSemaphore(value: 0)
-        var data: Data? = nil
-        
-        let request = URLRequest(url: requestURL)
-        let session = URLSession.shared.dataTask(with: request) { (responseData, _, _) in
-            if let responseData = responseData {
-                data = responseData
-            } else {
-                print("A network error occurred")
-            }
-            semaphore.signal()
-        }
-        session.resume()
-        semaphore.wait()
-        
-        if let data = data {
-            do {
-                return try OSM(xml: SWXMLHash.parse(data))
-            } catch let err {
-                print(err.localizedDescription)
-                return nil
-            }
-        } else {
-            return nil
-        }
+        return latitudeOK && longitudeOK
     }
 }
