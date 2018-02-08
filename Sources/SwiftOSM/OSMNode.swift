@@ -8,13 +8,13 @@
 import Foundation
 import SWXMLHash
 
-public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable {
+public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, OSMTaggable {
     private(set) weak var osm: OSM?
     
     // Fields
     public let id: String
     public let location: Coordinate
-    public let tags: Set<OSMTag>
+    public let tags: Dictionary<String, String>
     
     public var ways: Set<OSMWay> {
         if let precomputed = self._ways {
@@ -75,9 +75,9 @@ public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable {
         let coordinate = Coordinate(latitude: lat, longitude: lon)
         self.location = coordinate
         
-        var tags = Set<OSMTag>()
+        var tags = [String: String]()
         for xmlTag in xml["tag"].all {
-            tags.insert(try OSMTag(xml: xmlTag))
+            tags[try xmlTag.value(ofAttribute: "k")] = xmlTag.value(ofAttribute: "v")
         }
         self.tags = tags
         

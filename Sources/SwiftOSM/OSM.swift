@@ -21,8 +21,16 @@ public class OSM {
         
         for xmlWay in xml["osm"]["way"].all {
             let way = try OSMWay(xml: xmlWay, osm: self)
-            self.ways.insert(way)
+            
+            let allowedHighwayValues = ["pedestrian", "path", "footway", "steps"]
+            if let highwayValue = way.tags["highway"], way.tags["building"] == nil && allowedHighwayValues.contains(highwayValue) {
+                self.ways.insert(way)
+            }
         }
+        
+        self.nodes = self.nodes.filter({ (id, node) -> Bool in
+            return !node.ways.isEmpty
+        })
     }
     
     public func nodes(near startLocation: Coordinate, radius searchRadius: Int = 50) -> [OSMNode] {

@@ -8,9 +8,9 @@
 import Foundation
 import SWXMLHash
 
-public class OSMWay: Hashable, CustomStringConvertible {
+public class OSMWay: Hashable, CustomStringConvertible, OSMTaggable {
     public let id: String
-    public let tags: Set<OSMTag>
+    public let tags: Dictionary<String, String>
     public let nodes: Array<OSMNode>
     
     private(set) weak var osm: OSM?
@@ -18,12 +18,12 @@ public class OSMWay: Hashable, CustomStringConvertible {
     init(xml: XMLIndexer, osm: OSM) throws {
         self.id = try xml.value(ofAttribute: "id")
         
-        var tags = Set<OSMTag>()
+        var tags = [String: String]()
         for xmlTag in xml["tag"].all {
-            tags.insert(try OSMTag(xml: xmlTag))
+            tags[try xmlTag.value(ofAttribute: "k")] = xmlTag.value(ofAttribute: "v")
         }
         self.tags = tags
-        
+
         self.osm = osm
         
         // Load <tag>s
