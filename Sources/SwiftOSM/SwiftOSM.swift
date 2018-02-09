@@ -1,7 +1,7 @@
 import Foundation
 import SWXMLHash
 
-public struct Coordinate: CustomStringConvertible {
+public struct Coordinate: CustomStringConvertible, Encodable {
     public let latitude: Double
     public let longitude: Double
     
