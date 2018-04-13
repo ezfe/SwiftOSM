@@ -9,10 +9,13 @@ import Foundation
 import SWXMLHash
 
 public class OSM {
+    public let coveredArea: Rect
     public private(set) var nodes = Dictionary<String, OSMNode>()
     public private(set) var ways = Set<OSMWay>()
     
-    public init(xml: XMLIndexer) throws {
+    public init(xml: XMLIndexer, coveredArea: Rect) throws {
+        self.coveredArea = coveredArea
+        
         let xmlNodes = xml["osm"]["node"]
         for xmlNode in xmlNodes.all {
             let node = try OSMNode(xml: xmlNode, osm: self)

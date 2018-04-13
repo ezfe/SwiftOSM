@@ -2,21 +2,21 @@
   "object": {
     "pins": [
       {
-        "package": "SWXMLHash",
-        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
-        "state": {
-          "branch": null,
-          "revision": "17d992beb3aaeda403fd35f8d5e70ab1a8124f35",
-          "version": "4.6.0"
-        }
-      },
-      {
         "package": "SwiftPriorityQueue",
         "repositoryURL": "https://github.com/davecom/SwiftPriorityQueue.git",
         "state": {
           "branch": null,
           "revision": "c92b5b098a0153cd9660041502e1ed5a5e55bb17",
           "version": "1.2.1"
+        }
+      },
+      {
+        "package": "SWXMLHash",
+        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
+        "state": {
+          "branch": null,
+          "revision": "17d992beb3aaeda403fd35f8d5e70ab1a8124f35",
+          "version": "4.6.0"
         }
       }
     ]

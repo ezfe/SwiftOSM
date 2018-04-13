@@ -8,8 +8,18 @@
 import Foundation
 import SwiftPriorityQueue
 
+public protocol RouteResponse {
+    var distances: Dictionary<OSMNode, Double> { get }
+    var previous: Dictionary<OSMNode, OSMNode> { get }
+}
+
 extension OSM {
-    public func route(start: OSMNode, end: OSMNode) -> (distances: Dictionary<OSMNode, Double>, previous: Dictionary<OSMNode, OSMNode>) {
+    public struct SingleStartRouteResponse: RouteResponse {
+        public let distances: Dictionary<OSMNode, Double>
+        public let previous: Dictionary<OSMNode, OSMNode>
+    }
+    
+    public func route(start: OSMNode, end: OSMNode) -> RouteResponse {
         
         print("Starting route between \(start) and \(end)")
         
@@ -49,6 +59,25 @@ extension OSM {
             }
         }
         
-        return (distances: distances, previous: previous)
+        return SingleStartRouteResponse(distances: distances, previous: previous)
+    }
+    
+    public struct MultiStartRouteResponse: RouteResponse {
+        public let distances: Dictionary<OSMNode, Double>
+        public let previous: Dictionary<OSMNode, OSMNode>
+        public let start: OSMNode
+        public let end: OSMNode
+    }
+    
+    public func route(start startNodes: [OSMNode], end endNodes: [OSMNode]) -> MultiStartRouteResponse? {
+        for start in startNodes {
+            for end in endNodes {
+                let results = self.route(start: start, end: end)
+                if results.previous[end] != nil {
+                    return MultiStartRouteResponse(distances: results.distances, previous: results.previous, start: start, end: end)
+                }
+            }
+        }
+        return nil
     }
 }
