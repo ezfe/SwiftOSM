@@ -38,14 +38,14 @@ extension OSM {
         //print(queue.pop() == keefe)
         
         while let node = queue.pop() {
-//            print("Starting at \(node)")
+            //            print("Starting at \(node)")
             //Check if this node is reachable based on data
             if let distance = distances[node], distance < Double.infinity {
                 //For every neighbor
                 for neighbor in node.adjacent {
                     let distance = distance + node.location.distance(to: neighbor.location)
                     //If the new distance is less than the existing distance, update the distance and previous entry
-//                    print("\t\(neighbor) is \(distance) away")
+                    //                    print("\t\(neighbor) is \(distance) away")
                     if (distances[neighbor] ?? Double.infinity) > distance {
                         distances[neighbor] = distance
                         previous[neighbor] = node
@@ -74,7 +74,9 @@ extension OSM {
             for end in endNodes {
                 let results = self.route(start: start, end: end)
                 if results.previous[end] != nil {
-                    return MultiStartRouteResponse(distances: results.distances, previous: results.previous, start: start, end: end)
+                    let res = MultiStartRouteResponse(distances: results.distances, previous: results.previous, start: start, end: end)
+                    print(res)
+                    return res
                 }
             }
         }

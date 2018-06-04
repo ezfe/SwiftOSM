@@ -36,6 +36,10 @@ public class OSM {
         })
     }
     
+    public init() {
+        self.coveredArea = Rect(Coordinate(latitude: 0, longitude: 0), Coordinate(latitude: 0, longitude: 0))
+    }
+    
     public func nodes(near startLocation: Coordinate, radius searchRadius: Int = 50) -> [OSMNode] {
         var found = Array<OSMNode>()
         
