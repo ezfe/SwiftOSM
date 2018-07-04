@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-public class OSMWay: OSMTaggable {
+public class OSMWay: OSMIdentifiable, OSMTaggable {
     /// The OSM-assigned ID of the way
     ///
     /// OpenStreetMap IDs are unique only within object types.

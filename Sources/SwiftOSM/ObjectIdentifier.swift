@@ -7,6 +7,11 @@
 
 import Foundation
 
+public protocol OSMIdentifiable {
+    var id: Int { get }
+    var identifier: OSMIdentifier { get }
+}
+
 public enum OSMIdentifier {
     case way(Int)
     case node(Int)

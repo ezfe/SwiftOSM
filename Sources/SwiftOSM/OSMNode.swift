@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, OSMTaggable {
+public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, OSMIdentifiable, OSMTaggable {
     public unowned let osm: OSM
     
     public let id: Int
@@ -19,7 +19,7 @@ public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, 
     public lazy var ways: Set<OSMWay> = {
         var foundWays = Set<OSMWay>()
         
-        for way in osm.ways {
+        for (_, way) in osm.ways {
             if way.nodes.contains(self) {
                 foundWays.insert(way)
             }
