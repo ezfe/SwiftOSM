@@ -11,8 +11,8 @@ import SWXMLHash
 public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, OSMTaggable {
     public unowned let osm: OSM
     
-    // Fields
-    public let id: String
+    public let id: Int
+    public lazy var identifier: OSMIdentifier = { OSMIdentifier.node(self.id) }()
     public let location: Coordinate
     public let tags: Dictionary<String, String>
     

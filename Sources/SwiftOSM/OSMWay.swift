@@ -13,7 +13,8 @@ public class OSMWay: OSMTaggable {
     ///
     /// OpenStreetMap IDs are unique only within object types.
     /// Way and node IDs can conflict
-    public let id: String
+    public let id: Int
+    public lazy var identifier: OSMIdentifier = { OSMIdentifier.way(self.id) }()
     
     /// Tags assigned to this way
     public let tags: Dictionary<String, String>
@@ -41,7 +42,7 @@ public class OSMWay: OSMTaggable {
         nodes.reserveCapacity(xmlNodeRefs.count)
         
         for nodeRefTag in xmlNodeRefs {
-            let nodeID: String = try nodeRefTag.value(ofAttribute: "ref")
+            let nodeID: Int = try nodeRefTag.value(ofAttribute: "ref")
             if let node = osm.nodes[nodeID] {
                 nodes.append(node)
             } else {

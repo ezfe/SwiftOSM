@@ -10,7 +10,7 @@ import SWXMLHash
 
 public class OSM {
     public let coveredArea: Rect
-    public private(set) var nodes = Dictionary<String, OSMNode>()
+    public private(set) var nodes = Dictionary<Int, OSMNode>()
     public private(set) var ways = Set<OSMWay>()
     
     public init(xml: XMLIndexer, coveredArea: Rect) throws {
