@@ -25,6 +25,6 @@ let package = Package(
             dependencies: ["SWXMLHash", "SwiftPriorityQueue"]),
         .testTarget(
             name: "SwiftOSMTests",
-            dependencies: ["SwiftOSM"]),
+            dependencies: ["SwiftOSM", "SWXMLHash"]),
     ]
 )

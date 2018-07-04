@@ -8,12 +8,19 @@
 import Foundation
 import SWXMLHash
 
-public class OSMWay: Hashable, CustomStringConvertible, OSMTaggable {
+public class OSMWay: OSMTaggable {
+    /// The OSM-assigned ID of the way
+    ///
+    /// OpenStreetMap IDs are unique only within object types.
+    /// Way and node IDs can conflict
     public let id: String
+    
+    /// Tags assigned to this way
     public let tags: Dictionary<String, String>
+    
     public let nodes: Array<OSMNode>
     
-    private(set) weak var osm: OSM?
+    public unowned let osm: OSM
     
     init(xml: XMLIndexer, osm: OSM) throws {
         self.id = try xml.value(ofAttribute: "id")
@@ -43,15 +50,21 @@ public class OSMWay: Hashable, CustomStringConvertible, OSMTaggable {
         }
         self.nodes = nodes
     }
-    
+}
+
+extension OSMWay: Equatable {
     public static func ==(lhs: OSMWay, rhs: OSMWay) -> Bool {
         return lhs.id == rhs.id
     }
-    
+}
+
+extension OSMWay: Hashable {
     public var hashValue: Int {
         return self.id.hashValue
     }
-    
+}
+
+extension OSMWay: CustomStringConvertible {
     public var description: String {
         return "Way{id: \(id)}"
     }
