@@ -51,6 +51,12 @@ public class OSMWay: OSMIdentifiable, OSMTaggable {
         }
         self.nodes = nodes
     }
+
+    public lazy var entrances: [OSMNode] = {
+        return self.nodes
+            .filter({ $0.entrance != nil })
+            .sorted(by: { $0 > $1 })
+    }()
 }
 
 extension OSMWay: Equatable {

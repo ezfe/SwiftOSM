@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, OSMIdentifiable, OSMTaggable {
+public class OSMNode: OSMIdentifiable, OSMTaggable {
     public unowned let osm: OSM
     
     public let id: Int
@@ -63,19 +63,27 @@ public class OSMNode: CustomStringConvertible, Equatable, Hashable, Comparable, 
         
         self.osm = osm
     }
-    
+}
+
+extension OSMNode: CustomStringConvertible {
     public var description: String {
         return "Node{id: \(self.id), location: \(self.location)}"
     }
-    
+}
+
+extension OSMNode: Equatable {
     public static func ==(lhs: OSMNode, rhs: OSMNode) -> Bool {
         return lhs.id == rhs.id
     }
+}
     
+extension OSMNode: Comparable {
     public static func <(lhs: OSMNode, rhs: OSMNode) -> Bool {
         return lhs.id < rhs.id
     }
-    
+}
+ 
+extension OSMNode: Hashable {
     public var hashValue: Int {
         return self.id.hashValue
     }
