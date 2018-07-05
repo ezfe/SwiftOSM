@@ -28,6 +28,10 @@ public class OSMNode: OSMIdentifiable, OSMTaggable {
         return foundWays
     }()
     
+    public lazy var pedestrianWays: Set<OSMWay> = {
+       return self.ways.pedestrianFilter()
+    }()
+    
     public lazy var adjacent: Set<OSMNode> = {
         var foundNodes = Set<OSMNode>()
         
@@ -44,6 +48,27 @@ public class OSMNode: OSMIdentifiable, OSMTaggable {
             }
         }
 
+        return foundNodes
+    }()
+    
+    public lazy var pedestrianAdjacent: Set<OSMNode> = {
+        //TODO: This is very similar to above definition
+        //Probably should DRY this out :p
+        var foundNodes = Set<OSMNode>()
+        
+        for way in self.pedestrianWays { //Only change?
+            guard let index = way.nodes.index(of: self) else {
+                print("\(self) should be in \(way) but isn't!")
+                continue
+            }
+            if index > 0 {
+                foundNodes.insert(way.nodes[index - 1])
+            }
+            if index < way.nodes.count - 1 {
+                foundNodes.insert(way.nodes[index + 1])
+            }
+        }
+        
         return foundNodes
     }()
     

@@ -13,6 +13,10 @@ public class OSM {
     public private(set) var nodes = Dictionary<Int, OSMNode>()
     public private(set) var ways = Dictionary<Int, OSMWay>()
     
+    public private(set) lazy var pedestrianWays: Dictionary<Int, OSMWay> = {
+        return self.ways.pedestrianFilter()
+    }()
+    
     public init(xml: XMLIndexer, coveredArea: Rect) throws {
         self.coveredArea = coveredArea
         
@@ -24,12 +28,6 @@ public class OSM {
         
         for xmlWay in xml["osm"]["way"].all {
             let way = try OSMWay(xml: xmlWay, osm: self)
-            
-//            let allowedHighwayValues = ["pedestrian", "path", "footway", "steps"]
-//            if let highwayValue = way.tags["highway"], way.tags["building"] == nil && allowedHighwayValues.contains(highwayValue) {
-//                self.ways[way.id] = way
-//            }
-            
             self.ways[way.id] = way
         }
         

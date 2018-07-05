@@ -55,7 +55,13 @@ public class OSMWay: OSMIdentifiable, OSMTaggable {
     public lazy var entrances: [OSMNode] = {
         return self.nodes
             .filter({ $0.entrance != nil })
-            .sorted(by: { $0 > $1 })
+            .sorted(by: { (lhs, rhs) -> Bool in
+                if let lhse = lhs.entrance, let rhse = rhs.entrance {
+                    return lhse > rhse
+                } else {
+                    return true
+                }
+            })
     }()
 }
 

@@ -25,7 +25,7 @@ class SwiftOSMTests: XCTestCase {
     }
     
     func testHasWays() {
-        XCTAssertEqual(osm.ways.count, 693)
+        XCTAssert(osm.ways.count > 693)
         XCTAssert(osm.nodes.count > 0)
     }
     
@@ -37,12 +37,12 @@ class SwiftOSMTests: XCTestCase {
             return
         }
         
-//        print(acopian)
-//        if let acopian = acopian as? OSMWay {
-//            acopian.entrances.forEach { (node) in
-//                print(node.tags)
-//            }
-//        }
+        print(acopian)
+        if let acopian = acopian as? OSMWay {
+            acopian.entrances.forEach { (node) in
+                print(node.tags)
+            }
+        }
     }
 
     static var allTests = [

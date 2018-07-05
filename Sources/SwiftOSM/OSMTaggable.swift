@@ -12,6 +12,8 @@ public protocol OSMTaggable {
     var tags: Dictionary<String, String> { get }
 }
 
+//MARK: Entrance Tags
+
 public enum EntranceTag: String {
     case main
     case yes
@@ -21,19 +23,23 @@ public enum EntranceTag: String {
 }
 
 extension EntranceTag: Comparable {
-    public static func <(lhs: EntranceTag, rhs: EntranceTag) -> Bool {
-        switch lhs {
+    private var routingPriority: Int {
+        switch self {
         case .service:
-            return true
+            return 0
         case .home:
-            return rhs != .service
+            return 1
         case .staircase:
-            return rhs != .home && rhs != .service
+            return 2
         case .yes:
-            return rhs != .home && rhs != .service && rhs != .staircase
+            return 3
         case .main:
-            return false
+            return 4
         }
+    }
+    
+    public static func <(lhs: EntranceTag, rhs: EntranceTag) -> Bool {
+        return lhs.routingPriority < rhs.routingPriority
     }
 }
 
