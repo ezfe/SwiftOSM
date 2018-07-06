@@ -31,7 +31,7 @@ class SwiftOSMTests: XCTestCase {
     
     func testQueryAcopian() {
         let osm = try! OSM(xml: self.xmlData, coveredArea: self.rect)
-        guard let acopian = osm.object(by: .way(204187226)) else {
+        guard let acopian = osm.object(by: .way(480957420)) else {
             print(osm.ways)
             XCTFail("Acopian does not exist")
             return

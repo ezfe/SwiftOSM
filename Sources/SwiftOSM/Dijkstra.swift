@@ -42,7 +42,7 @@ extension OSM {
             //Check if this node is reachable based on data
             if let distance = distances[node], distance < Double.infinity {
                 //For every neighbor
-                for neighbor in node.adjacent {
+                for neighbor in node.pedestrianAdjacent {
                     let distance = distance + node.location.distance(to: neighbor.location)
                     //If the new distance is less than the existing distance, update the distance and previous entry
                     //                    print("\t\(neighbor) is \(distance) away")
@@ -75,7 +75,7 @@ extension OSM {
                 let results = self.route(start: start, end: end)
                 if results.previous[end] != nil {
                     let res = MultiStartRouteResponse(distances: results.distances, previous: results.previous, start: start, end: end)
-                    print(res)
+//                    print(res)
                     return res
                 }
             }
