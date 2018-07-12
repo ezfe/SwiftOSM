@@ -1,20 +1,13 @@
 //
-//  OSMEntity.swift
-//  routing-swiftPackageDescription
+//  Entrances.swift
+//  SwiftOSM
 //
 //  Created by Ezekiel Elin on 11/16/17.
 //
 
 import Foundation
-import SWXMLHash
 
-public protocol OSMTaggable {
-    var tags: Dictionary<String, String> { get }
-}
-
-//MARK: Entrance Tags
-
-public enum EntranceTag: String {
+public enum TagEntrance: String {
     case main
     case yes
     case staircase
@@ -22,7 +15,7 @@ public enum EntranceTag: String {
     case service
 }
 
-extension EntranceTag: Comparable {
+extension TagEntrance: Comparable {
     private var routingPriority: Int {
         switch self {
         case .service:
@@ -38,15 +31,15 @@ extension EntranceTag: Comparable {
         }
     }
     
-    public static func <(lhs: EntranceTag, rhs: EntranceTag) -> Bool {
+    public static func <(lhs: TagEntrance, rhs: TagEntrance) -> Bool {
         return lhs.routingPriority < rhs.routingPriority
     }
 }
 
-extension OSMTaggable {
-    public var entrance: EntranceTag? {
+extension OSMNode {
+    public var entrance: TagEntrance? {
         if let etv = self.tags["entrance"] {
-            return EntranceTag(rawValue: etv)
+            return TagEntrance(rawValue: etv)
         } else {
             return nil
         }

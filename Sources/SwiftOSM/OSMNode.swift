@@ -29,7 +29,7 @@ public class OSMNode: OSMIdentifiable, OSMTaggable {
     }()
     
     public lazy var pedestrianWays: Set<OSMWay> = {
-       return self.ways.pedestrianFilter()
+       return self.ways.filter(for: .foot)
     }()
     
     public lazy var adjacent: Set<OSMNode> = {

@@ -14,8 +14,12 @@ public class OSM {
     public private(set) var ways = Dictionary<Int, OSMWay>()
     
     public private(set) lazy var pedestrianWays: Dictionary<Int, OSMWay> = {
-        return self.ways.pedestrianFilter()
+        return self.ways.filter(for: .foot)
     }()
+    
+    public convenience init(xml xmlData: Data, coveredArea: Rect) throws {
+        try self.init(xml: SWXMLHash.parse(xmlData), coveredArea: coveredArea)
+    }
     
     public init(xml: XMLIndexer, coveredArea: Rect) throws {
         self.coveredArea = coveredArea

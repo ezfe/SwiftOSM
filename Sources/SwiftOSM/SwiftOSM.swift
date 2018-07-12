@@ -47,7 +47,7 @@ public struct Rect {
     }
     
     public var mapURL: URL {
-        return URL(string: "http://api.openstreetmap.org/api/0.6/map?bbox=\(min.longitude),\(min.latitude),\(max.longitude),\(max.latitude)")!
+        return URL(string: "https://api.openstreetmap.org/api/0.6/map?bbox=\(min.longitude),\(min.latitude),\(max.longitude),\(max.latitude)")!
     }
     
     public func contains(point: Coordinate) -> Bool {

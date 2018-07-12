@@ -23,7 +23,14 @@ public class OSMWay: OSMIdentifiable, OSMTaggable {
     
     public unowned let osm: OSM
     
-    init(xml: XMLIndexer, osm: OSM) throws {
+    public init(id: Int, tags: Dictionary<String, String> = [:], nodes: [OSMNode] = [], osm: OSM) {
+        self.id = id
+        self.tags = tags
+        self.nodes = nodes
+        self.osm = osm
+    }
+    
+    internal init(xml: XMLIndexer, osm: OSM) throws {
         self.id = try xml.value(ofAttribute: "id")
         
         var tags = [String: String]()

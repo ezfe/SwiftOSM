@@ -4,20 +4,18 @@ import SWXMLHash
 
 class SwiftOSMTests: XCTestCase {
     
-    var xmlData: XMLIndexer!
-    var rect: Rect!
-    var osm: OSM!
-    
-    override func setUp() {
+    lazy var rect: Rect = {
         let min = Coordinate(latitude: 40.700886107, longitude: -75.2042269707)
         let max = Coordinate(latitude: 40.6936141011, longitude: -75.2157282829)
-        self.rect = Rect(min, max)
-
-        let data = try! Data(contentsOf: self.rect.mapURL)
-        self.xmlData = SWXMLHash.parse(data)
-        
-        self.osm = try! OSM(xml: self.xmlData, coveredArea: self.rect)
-    }
+        return Rect(min, max)
+    }()
+    lazy var xmlData: XMLIndexer = {
+        let data = try! Data(contentsOf: rect.mapURL)
+        return SWXMLHash.parse(data)
+    }()
+    lazy var osm: OSM = {
+        return try! OSM(xml: self.xmlData, coveredArea: self.rect)
+    }()
     
     func testInitializer() {
         let osm = try? OSM(xml: self.xmlData, coveredArea: self.rect)
@@ -30,7 +28,6 @@ class SwiftOSMTests: XCTestCase {
     }
     
     func testQueryAcopian() {
-        let osm = try! OSM(xml: self.xmlData, coveredArea: self.rect)
         guard let acopian = osm.object(by: .way(480957420)) else {
             print(osm.ways)
             XCTFail("Acopian does not exist")
@@ -44,10 +41,37 @@ class SwiftOSMTests: XCTestCase {
             }
         }
     }
+    
+    func testMotorwayNavigatable() {
+        let osm = OSM()
+        let way = OSMWay(id: -1, tags: [ "highway": "motorway" ], nodes: [], osm: osm)
+        
+        XCTAssertTrue(way.access(for: .motor_vehicle))
+        XCTAssertFalse(way.access(for: .foot))
+    }
 
+    func testFootwayNavigatable() {
+        let osm = OSM()
+        let way = OSMWay(id: -1, tags: [ "highway": "footway" ], nodes: [], osm: osm)
+        
+        XCTAssertFalse(way.access(for: .motor_vehicle))
+        XCTAssertTrue(way.access(for: .foot))
+    }
+    
+    func testMotorwayFootYesNavigatable() {
+        let osm = OSM()
+        let way = OSMWay(id: -1, tags: [ "highway": "motorway", "foot": "yes" ], nodes: [], osm: osm)
+        
+        XCTAssertTrue(way.access(for: .motor_vehicle))
+        XCTAssertTrue(way.access(for: .foot))
+    }
+
+
+    
     static var allTests = [
         ("testInitializer", testInitializer),
         ("testHasWays", testHasWays),
-        ("testQueryAcopian", testQueryAcopian)
+        ("testQueryAcopian", testQueryAcopian),
+        ("testMotorwayNavigatable", testMotorwayNavigatable)
     ]
 }

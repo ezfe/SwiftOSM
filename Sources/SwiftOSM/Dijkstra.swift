@@ -19,9 +19,13 @@ extension OSM {
         public let previous: Dictionary<OSMNode, OSMNode>
     }
     
-    public func route(start: OSMNode, end: OSMNode) -> RouteResponse {
+    public func route(start: OSMNode, end: OSMNode? = nil) -> RouteResponse {
         
-        print("Starting route between \(start) and \(end)")
+        if let end = end {
+            print("Starting route between \(start) and \(end)")
+        } else {
+            print("Starting open route from \(start)")
+        }
         
         var distances = Dictionary<OSMNode, Double>()
         var previous = Dictionary<OSMNode, OSMNode>()
