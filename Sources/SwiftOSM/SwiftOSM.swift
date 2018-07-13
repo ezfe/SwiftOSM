@@ -1,7 +1,7 @@
 import Foundation
 import SWXMLHash
 
-public struct Coordinate: CustomStringConvertible, Codable {
+public struct Coordinate {
     public let latitude: Double
     public let longitude: Double
     
@@ -10,10 +10,6 @@ public struct Coordinate: CustomStringConvertible, Codable {
         self.longitude = longitude
     }
     
-    public var description: String {
-        return "{lat: \(latitude), lon: \(longitude)}"
-    }
-
     private func radians(degrees: Double) -> Double {
         return degrees * Double.pi / 180.0
     }
@@ -30,6 +26,17 @@ public struct Coordinate: CustomStringConvertible, Codable {
         return earthRadius * c
     }
 }
+
+extension Coordinate: Codable {}
+
+extension Coordinate: CustomStringConvertible {
+    public var description: String {
+        return "{lat: \(latitude), lon: \(longitude)}"
+    }
+}
+
+extension Coordinate: Equatable {}
+extension Coordinate: Hashable {}
 
 public struct Rect {
     public let min: Coordinate
@@ -57,3 +64,6 @@ public struct Rect {
         return latitudeOK && longitudeOK
     }
 }
+
+extension Rect: Equatable {}
+extension Rect: Hashable {}

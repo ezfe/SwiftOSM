@@ -28,7 +28,7 @@ class SwiftOSMTests: XCTestCase {
     }
     
     func testQueryAcopian() {
-        guard let acopian = osm.object(by: .way(480957420)) else {
+        guard let acopian = osm.object(by: .way(204187226)) else {
             print(osm.ways)
             XCTFail("Acopian does not exist")
             return
@@ -65,13 +65,35 @@ class SwiftOSMTests: XCTestCase {
         XCTAssertTrue(way.access(for: .motor_vehicle))
         XCTAssertTrue(way.access(for: .foot))
     }
+    
+    func testRoutingPerformance() {
+        guard let acopian = osm.object(by: .way(204187226)) as? OSMWay else {
+            XCTFail("Unable to find Acopian")
+            return
+        }
+        
+        guard let keefe = osm.object(by: .way(480957420)) as? OSMWay else {
+            XCTFail("Unable to find Acopian")
+            return
+        }
+        
+        guard let farinon = osm.object(by: .way(204187233)) as? OSMWay else {
+            XCTFail("Unable to find Acopian")
+            return
+        }
 
-
+        self.measure { [weak self] in
+            osm.route(start: acopian.entrances, end: keefe.entrances)
+            osm.route(start: farinon.entrances, end: keefe.entrances)
+            osm.route(start: farinon.entrances, end: acopian.entrances)
+        }
+    }
     
     static var allTests = [
         ("testInitializer", testInitializer),
         ("testHasWays", testHasWays),
         ("testQueryAcopian", testQueryAcopian),
-        ("testMotorwayNavigatable", testMotorwayNavigatable)
+        ("testMotorwayNavigatable", testMotorwayNavigatable),
+        ("testRoutingPerformance", testRoutingPerformance)
     ]
 }
