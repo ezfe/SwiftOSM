@@ -1,7 +1,7 @@
 import Foundation
 import SWXMLHash
 
-public struct Coordinate: Hashable, Equatable {
+public struct Coordinate: Hashable, Equatable, Codable {
     public let latitude: Double
     public let longitude: Double
     
@@ -27,14 +27,13 @@ public struct Coordinate: Hashable, Equatable {
     }
 }
 
-extension Coordinate: Codable {}
-
 extension Coordinate: CustomStringConvertible {
     public var description: String {
         return "{lat: \(latitude), lon: \(longitude)}"
     }
 }
-public struct Rect: Equatable, Hashable {
+
+public struct Rect: Equatable, Hashable, Codable {
     public let min: Coordinate
     public let max: Coordinate
     
