@@ -17,12 +17,23 @@ public class OSM {
         return self.ways.filter(for: .foot)
     }()
     
-    public convenience init(xml xmlData: Data, coveredArea: Rect) throws {
-        try self.init(xml: SWXMLHash.parse(xmlData), coveredArea: coveredArea)
+    public convenience init(xml xmlData: Data) throws {
+        try self.init(xml: SWXMLHash.parse(xmlData))
     }
     
-    public init(xml: XMLIndexer, coveredArea: Rect) throws {
-        self.coveredArea = coveredArea
+    public init(xml: XMLIndexer) throws {
+        let bounds = xml["osm"]["bounds"].all.first
+        
+        let minlat: Double = bounds?.value(ofAttribute: "minlat") ?? 0
+        let minlon: Double = bounds?.value(ofAttribute: "minlon") ?? 0
+        
+        let maxlat: Double = bounds?.value(ofAttribute: "maxlat") ?? 0
+        let maxlon: Double = bounds?.value(ofAttribute: "maxlon") ?? 0
+        
+        self.coveredArea = Rect(
+            Coordinate(latitude: minlat, longitude: minlon),
+            Coordinate(latitude: maxlat, longitude: maxlon)
+        )
         
         let xmlNodes = xml["osm"]["node"]
         for xmlNode in xmlNodes.all {
