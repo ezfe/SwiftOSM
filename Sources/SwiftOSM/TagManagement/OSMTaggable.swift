@@ -8,5 +8,6 @@
 import Foundation
 
 public protocol OSMTaggable {
+    /// Tags assigned to this entity
     var tags: Dictionary<String, String> { get }
 }

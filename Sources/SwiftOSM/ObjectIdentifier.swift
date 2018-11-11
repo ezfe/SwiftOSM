@@ -8,7 +8,12 @@
 import Foundation
 
 public protocol OSMIdentifiable {
+    /// The OSM-assigned ID of the way
+    ///
+    /// OpenStreetMap IDs are unique only within object types.
+    /// Way and node IDs can conflict
     var id: Int { get }
+    
     var identifier: OSMIdentifier { get }
 }
 

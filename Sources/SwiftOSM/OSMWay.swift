@@ -9,25 +9,29 @@ import Foundation
 import SWXMLHash
 
 public class OSMWay: OSMIdentifiable, OSMTaggable {
-    /// The OSM-assigned ID of the way
-    ///
-    /// OpenStreetMap IDs are unique only within object types.
-    /// Way and node IDs can conflict
     public let id: Int
     public lazy var identifier: OSMIdentifier = { OSMIdentifier.way(self.id) }()
     
-    /// Tags assigned to this way
     public let tags: Dictionary<String, String>
     
     public let nodes: Array<OSMNode>
     
-    public unowned let osm: OSM
+    public lazy var entrances: [OSMNode] = {
+        return self.nodes
+            .filter({ $0.entrance != nil })
+            .sorted(by: { (lhs, rhs) -> Bool in
+                if let lhse = lhs.entrance, let rhse = rhs.entrance {
+                    return lhse > rhse
+                } else {
+                    return true
+                }
+            })
+    }()
     
-    public init(id: Int, tags: Dictionary<String, String> = [:], nodes: [OSMNode] = [], osm: OSM) {
+    public init(id: Int, tags: Dictionary<String, String> = [:], nodes: [OSMNode] = []) {
         self.id = id
         self.tags = tags
         self.nodes = nodes
-        self.osm = osm
     }
     
     internal init(xml: XMLIndexer, osm: OSM) throws {
@@ -38,8 +42,6 @@ public class OSMWay: OSMIdentifiable, OSMTaggable {
             tags[try xmlTag.value(ofAttribute: "k")] = xmlTag.value(ofAttribute: "v")
         }
         self.tags = tags
-
-        self.osm = osm
         
         // Load <tag>s
         
@@ -58,18 +60,6 @@ public class OSMWay: OSMIdentifiable, OSMTaggable {
         }
         self.nodes = nodes
     }
-
-    public lazy var entrances: [OSMNode] = {
-        return self.nodes
-            .filter({ $0.entrance != nil })
-            .sorted(by: { (lhs, rhs) -> Bool in
-                if let lhse = lhs.entrance, let rhse = rhs.entrance {
-                    return lhse > rhse
-                } else {
-                    return true
-                }
-            })
-    }()
 }
 
 extension OSMWay: Equatable {

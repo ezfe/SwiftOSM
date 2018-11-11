@@ -13,6 +13,7 @@ public class OSMNode: OSMIdentifiable, OSMTaggable {
     
     public let id: Int
     public lazy var identifier: OSMIdentifier = { OSMIdentifier.node(self.id) }()
+    
     public let location: Coordinate
     public let tags: Dictionary<String, String>
     

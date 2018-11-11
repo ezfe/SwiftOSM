@@ -4,21 +4,16 @@ import SWXMLHash
 
 class SwiftOSMTests: XCTestCase {
     
-    lazy var rect: Rect = {
-        let min = Coordinate(latitude: 40.700886107, longitude: -75.2042269707)
-        let max = Coordinate(latitude: 40.6936141011, longitude: -75.2157282829)
-        return Rect(min, max)
-    }()
     lazy var xmlData: XMLIndexer = {
-        let data = try! Data(contentsOf: rect.mapURL)
+        let data = try! Data(contentsOf: URL(string: "https://f001.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_za1ea9c3fff6bfd94633d0b1e_f115aac9a06ddecc8_d20181110_m215634_c001_v0001105_t0051")!)
         return SWXMLHash.parse(data)
     }()
     lazy var osm: OSM = {
-        return try! OSM(xml: self.xmlData, coveredArea: self.rect)
+        return try! OSM(xml: self.xmlData)
     }()
     
     func testInitializer() {
-        let osm = try? OSM(xml: self.xmlData, coveredArea: self.rect)
+        let osm = try? OSM(xml: self.xmlData)
         XCTAssertNotNil(osm)
     }
     
