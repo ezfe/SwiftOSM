@@ -122,7 +122,7 @@ public enum AccessLevel: String {
 }
 
 public extension OSMTaggable {
-    public var highway: TagHighway? {
+    var highway: TagHighway? {
         if let htv = self.tags["highway"] {
             return TagHighway(rawValue: htv)
         } else {
@@ -130,7 +130,7 @@ public extension OSMTaggable {
         }
     }
     
-    public func access(for accessType: AccessType) -> Bool {
+    func access(for accessType: AccessType) -> Bool {
         guard let highwayTag = self.highway else {
             return false
         }

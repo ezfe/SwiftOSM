@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/davecom/SwiftPriorityQueue.git",
         "state": {
           "branch": null,
-          "revision": "c92b5b098a0153cd9660041502e1ed5a5e55bb17",
-          "version": "1.2.1"
+          "revision": "9e132c74cb337542ef05e99e0c2dbf345b6527a3",
+          "version": "1.3.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
         "state": {
           "branch": null,
-          "revision": "b130217d81833cecd7ddf78b76d60200f1070d98",
-          "version": "4.7.4"
+          "revision": "f43166a8e18fdd0857f29e303b1bb79a5428bca0",
+          "version": "4.9.0"
         }
       }
     ]

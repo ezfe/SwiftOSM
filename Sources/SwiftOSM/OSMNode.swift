@@ -37,7 +37,7 @@ public class OSMNode: OSMIdentifiable, OSMTaggable {
         var foundNodes = Set<OSMNode>()
         
         for way in self.ways {
-            guard let index = way.nodes.index(of: self) else {
+            guard let index = way.nodes.firstIndex(of: self) else {
                 print("\(self) should be in \(way) but isn't!")
                 continue
             }
@@ -58,7 +58,7 @@ public class OSMNode: OSMIdentifiable, OSMTaggable {
         var foundNodes = Set<OSMNode>()
         
         for way in self.pedestrianWays { //Only change?
-            guard let index = way.nodes.index(of: self) else {
+            guard let index = way.nodes.firstIndex(of: self) else {
                 print("\(self) should be in \(way) but isn't!")
                 continue
             }
@@ -110,7 +110,7 @@ extension OSMNode: Comparable {
 }
  
 extension OSMNode: Hashable {
-    public var hashValue: Int {
-        return self.id.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
     }
 }

@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -14,8 +14,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "4.7.0"),
-        .package(url: "https://github.com/davecom/SwiftPriorityQueue.git", from: "1.2.1")
+        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "4.9.0"),
+        .package(url: "https://github.com/davecom/SwiftPriorityQueue.git", from: "1.3.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
