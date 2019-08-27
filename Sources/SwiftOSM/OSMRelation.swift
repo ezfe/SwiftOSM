@@ -72,12 +72,13 @@ public extension OSMRelation {
         
         public let role: String?
         
-        init(identifier: OSMIdentifier, role: String, osm: OSM) {
+        init(identifier: OSMIdentifier, role: String? = nil, osm: OSM) {
             self.identifier = identifier
             self.role = role
+            self.osm = osm
         }
         
-        init(type: String, id: Int, role: String, osm: OSM) {
+        init(type: String, id: Int, role: String? = nil, osm: OSM) {
             switch type {
             case "node":
                 self.identifier = OSMIdentifier.node(id)
@@ -90,6 +91,7 @@ public extension OSMRelation {
             }
             
             self.role = role
+            self.osm = osm
         }
     }
 }
