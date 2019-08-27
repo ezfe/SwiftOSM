@@ -43,15 +43,20 @@ public enum TagHighway: String {
     /// The link roads (sliproads/ramps) leading to/from a `.tertiary` road from/to a tertiary road or lower class highway.
     case tertiary_link
     
-    /// For [living streets](http://en.wikipedia.org/wiki/living_street), which are residential streets where pedestrians have legal priority over cars, speeds are kept very low and where children are allowed to play on the street.
+    /// For [living streets](http://en.wikipedia.org/wiki/living_street)
+    /// which are residential streets where pedestrians have legal priority over cars, speeds
+    /// are kept very low and where children are allowed to play on the street.
     case living_street
-    /// For roads used mainly/exclusively for pedestrians in shopping and some residential areas which may allow access by motorised vehicles only for very limited periods of the day.
+    /// For roads used mainly/exclusively for pedestrians in shopping and some
+    /// residential areas which may allow access by motorised vehicles only for very limited periods of the day.
     case pedestrian
     /// Roads for mostly agricultural or forestry uses.
     ///
     /// To describe the quality of a track, see tracktype=*.
     ///
-    /// - Note: Although tracks are often rough with unpaved surfaces, this tag is not describing the quality of a road but its use. Consequently, if you want to tag a general use road, use one of the general highway values instead of track.
+    /// - Note: Although tracks are often rough with unpaved surfaces, this tag is not describing the quality
+    /// of a road but its use. Consequently, if you want to tag a general use road, use one of the general
+    /// highway values instead of track.
     case track
     /// A busway where the vehicle guided by the way (though not a railway) and is not suitable for other traffic.
     ///

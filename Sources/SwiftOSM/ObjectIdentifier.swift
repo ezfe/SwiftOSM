@@ -20,6 +20,7 @@ public protocol OSMIdentifiable {
 public enum OSMIdentifier {
     case way(Int)
     case node(Int)
+    case relation(Int)
 }
 
 extension OSMIdentifier: Codable {
@@ -52,6 +53,9 @@ extension OSMIdentifier: Codable {
             try container.encode(id, forKey: .id)
         case .way(let id):
             try container.encode("way", forKey: .type)
+            try container.encode(id, forKey: .id)
+        case .relation(let id):
+            try container.encode("relation", forKey: .type)
             try container.encode(id, forKey: .id)
         }
     }

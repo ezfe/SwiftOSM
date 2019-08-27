@@ -12,6 +12,7 @@ public class OSM {
     public let coveredArea: Rect
     public private(set) var nodes = Dictionary<Int, OSMNode>()
     public private(set) var ways = Dictionary<Int, OSMWay>()
+    public private(set) var relations = Dictionary<Int, OSMRelation>()
     
     public private(set) lazy var pedestrianWays: Dictionary<Int, OSMWay> = {
         return self.ways.filter(for: .foot)
@@ -35,8 +36,7 @@ public class OSM {
             Coordinate(latitude: maxlat, longitude: maxlon)
         )
         
-        let xmlNodes = xml["osm"]["node"]
-        for xmlNode in xmlNodes.all {
+        for xmlNode in xml["osm"]["node"].all {
             let node = try OSMNode(xml: xmlNode, osm: self)
             self.nodes[node.id] = node
         }
@@ -46,9 +46,14 @@ public class OSM {
             self.ways[way.id] = way
         }
         
-        self.nodes = self.nodes.filter({ (id, node) -> Bool in
-            return !node.ways.isEmpty
-        })
+        for xmlRelation in xml["osm"]["relation"].all {
+            let relation = try OSMRelation(xml: xmlRelation, osm: self)
+            self.relations[relation.id] = relation
+        }
+        
+//        self.nodes = self.nodes.filter({ (id, node) -> Bool in
+//            return !node.ways.isEmpty
+//        })
     }
     
     public init() {
@@ -61,6 +66,8 @@ public class OSM {
             return self.nodes[nodeId]
         case .way(let wayId):
             return self.ways[wayId]
+        case .relation(let relationId):
+            return self.relations[relationId]
         }
     }
     
