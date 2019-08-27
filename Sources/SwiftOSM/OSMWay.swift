@@ -37,14 +37,13 @@ public class OSMWay: OSMIdentifiable, OSMTaggable {
     internal init(xml: XMLIndexer, osm: OSM) throws {
         self.id = try xml.value(ofAttribute: "id")
         
+        // Load <tag>s
         var tags = [String: String]()
         for xmlTag in xml["tag"].all {
             tags[try xmlTag.value(ofAttribute: "k")] = xmlTag.value(ofAttribute: "v")
         }
         self.tags = tags
-        
-        // Load <tag>s
-        
+                
         let xmlNodeRefs = xml["nd"].all
         
         var nodes = Array<OSMNode>()

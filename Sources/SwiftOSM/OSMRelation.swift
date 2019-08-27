@@ -41,7 +41,11 @@ public class OSMRelation: OSMIdentifiable, OSMTaggable {
         for memberRefTag in xmlMemberRefs {
             let type: String = try memberRefTag.value(ofAttribute: "type")
             let memberID: Int = try memberRefTag.value(ofAttribute: "ref")
-            let role: String = try memberRefTag.value(ofAttribute: "role")
+            
+            var role: String? = try memberRefTag.value(ofAttribute: "role")
+            if let r = role, r.isEmpty {
+                role = nil
+            }
             
             let member = Member(type: type, id: memberID, role: role, osm: osm)
             members.append(member)
