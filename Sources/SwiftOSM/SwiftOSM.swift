@@ -59,3 +59,15 @@ public struct Rect: Equatable, Hashable, Codable {
         return latitudeOK && longitudeOK
     }
 }
+
+#if canImport(CoreLocation)
+
+import CoreLocation
+
+public extension CLLocationCoordinate2D {
+    static func from(coordinate: Coordinate) -> Self {
+        return CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+}
+
+#endif
