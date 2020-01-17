@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "4.9.0"),
+        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "5.0.1"),
         .package(url: "https://github.com/davecom/SwiftPriorityQueue.git", from: "1.3.0")
     ],
     targets: [
