@@ -42,7 +42,7 @@ public class OSMRelation: OSMIdentifiable, OSMTaggable {
             let type: String = try memberRefTag.value(ofAttribute: "type")
             let memberID: Int = try memberRefTag.value(ofAttribute: "ref")
             
-            var role: String? = try memberRefTag.value(ofAttribute: "role")
+            var role: String? = memberRefTag.value(ofAttribute: "role")
             if let r = role, r.isEmpty {
                 role = nil
             }
