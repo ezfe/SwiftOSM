@@ -22,7 +22,7 @@ public enum OSMIdentifier {
     case node(Int)
     case relation(Int)
 
-    func build(type: String?, id: Int?) -> OSMIdentifier? {
+    static func build(type: String?, id: Int?) -> OSMIdentifier? {
         guard let type = type, let id = id else {
             return nil
         }
