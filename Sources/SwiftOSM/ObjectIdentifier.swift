@@ -22,14 +22,18 @@ public enum OSMIdentifier {
     case node(Int)
     case relation(Int)
 
-    public init?(type: String, id: Int) {
+    func build(type: String?, id: Int?) -> OSMIdentifier? {
+        guard let type = type, let id = id else {
+            return nil
+        }
+
         switch type {
             case "way":
-                self = .way(id)
+                return .way(id)
             case "node":
-                self = .node(id)
+                return .node(id)
             case "relation":
-                self = .relation(id)
+                return .relation(id)
             default:
                 return nil
         }
