@@ -21,23 +21,6 @@ public enum OSMIdentifier {
     case way(Int)
     case node(Int)
     case relation(Int)
-
-    public func build(type: String?, id: Int?) -> OSMIdentifier? {
-        guard let type = type, let id = id else {
-            return nil
-        }
-
-        switch type {
-            case "way":
-                return .way(id)
-            case "node":
-                return .node(id)
-            case "relation":
-                return .relation(id)
-            default:
-                return nil
-        }
-    }
 }
 
 extension OSMIdentifier: Codable {
