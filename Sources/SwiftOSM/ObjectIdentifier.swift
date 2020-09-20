@@ -21,6 +21,19 @@ public enum OSMIdentifier {
     case way(Int)
     case node(Int)
     case relation(Int)
+
+    public init?(type: String, id: Int) {
+        switch type {
+            case "way":
+                self = .way(id)
+            case "node":
+                self = .node(id)
+            case "relation":
+                self = .relation(id)
+            default:
+                return nil
+        }
+    }
 }
 
 extension OSMIdentifier: Codable {
